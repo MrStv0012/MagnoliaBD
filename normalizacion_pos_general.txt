@@ -1,0 +1,77 @@
+RELACION ORIGINAL
+
+pos_general(id_venta, fecha, cliente_documento, cliente_nombre, cliente_ciudad,
+cliente_departamento, cliente_telefono, vendedor_documento, vendedor_nombre,
+vendedor_sucursal, producto_codigo, producto_nombre, categoria, subcategoria,
+proveedor_nombre, proveedor_ciudad, proveedor_departamento, cantidad,
+precio_unitario, metodo_pago, banco, garantia_meses)
+
+Clave primaria: id_venta
+
+
+DEPENDENCIAS FUNCIONALES
+
+DF1: id_venta -> fecha, cliente_documento, vendedor_documento, producto_codigo,
+                 cantidad, precio_unitario, metodo_pago, banco
+DF2: cliente_documento -> cliente_nombre, cliente_telefono, cliente_ciudad
+DF3: cliente_ciudad -> cliente_departamento
+DF4: vendedor_documento -> vendedor_nombre, vendedor_sucursal
+DF5: producto_codigo -> producto_nombre, categoria, subcategoria,
+                         proveedor_nombre, garantia_meses
+DF6: proveedor_nombre -> proveedor_ciudad
+DF7: proveedor_ciudad -> proveedor_departamento
+
+
+1FN
+
+pos_general(id_venta, fecha, cliente_documento, cliente_nombre, cliente_ciudad,
+cliente_departamento, cliente_telefono, vendedor_documento, vendedor_nombre,
+vendedor_sucursal, producto_codigo, producto_nombre, categoria, subcategoria,
+proveedor_nombre, proveedor_ciudad, proveedor_departamento, cantidad,
+precio_unitario, metodo_pago, banco, garantia_meses)
+
+PK: id_venta
+
+
+2FN
+
+pos_general(id_venta, fecha, cliente_documento, cliente_nombre, cliente_ciudad,
+cliente_departamento, cliente_telefono, vendedor_documento, vendedor_nombre,
+vendedor_sucursal, producto_codigo, producto_nombre, categoria, subcategoria,
+proveedor_nombre, proveedor_ciudad, proveedor_departamento, cantidad,
+precio_unitario, metodo_pago, banco, garantia_meses)
+
+PK: id_venta
+
+
+3FN
+
+Ciudad(nombre, departamento)
+PK: nombre
+
+Cliente(documento, nombre, telefono, ciudad_FK)
+PK: documento
+FK: ciudad_FK -> Ciudad.nombre
+
+Sucursal(id, nombre, ciudad_FK)
+PK: id
+FK: ciudad_FK -> Ciudad.nombre
+
+Vendedor(documento, nombre, sucursal_FK)
+PK: documento
+FK: sucursal_FK -> Sucursal.id
+
+Proveedor(id, nombre, ciudad_FK)
+PK: id
+FK: ciudad_FK -> Ciudad.nombre
+
+Producto(codigo, nombre, categoria, subcategoria, garantia_meses, proveedor_FK)
+PK: codigo
+FK: proveedor_FK -> Proveedor.id
+
+Venta(id_venta, fecha, cantidad, precio_unitario, metodo_pago, banco,
+      cliente_FK, vendedor_FK, producto_FK)
+PK: id_venta
+FK: cliente_FK -> Cliente.documento
+FK: vendedor_FK -> Vendedor.documento
+FK: producto_FK -> Producto.codigo
